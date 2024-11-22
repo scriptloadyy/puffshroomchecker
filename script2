@@ -1,6 +1,3 @@
-
-
-
 local ScreenGui = Instance.new("ScreenGui") ScreenGui.Name = "nGui"
 local Frame = Instance.new("Frame")
 local ScrollingFrame = Instance.new("ScrollingFrame")
