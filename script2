@@ -215,16 +215,12 @@ local function onAncestryChanged(child, parent)
             elseif decal.Texture == "http://www.roblox.com/asset/?id=1952682401" then
                 print("A sunflower seed has been destroyed.")
             end
-            local sound = game.StarterGui:FindFirstChild("soundRemove")
-            if sound then
-                sound:Play()
-            end
         end
     end
 end
 
 while wait(0.2) do
-    for i, v in workspace:GetDescendants() do
+    for i, v in workspace.Collectiles:GetDescendants() do
         if v:IsA("BasePart") and v:FindFirstChildOfClass("Decal") then
             v.AncestryChanged:Connect(onAncestryChanged)
         end
@@ -248,7 +244,7 @@ while true do
     local tp = 0
     local sfs = 0
 
-    for i, v in workspace:GetDescendants() do
+    for i, v in workspace.Collectiles:GetDescendants() do
         if v:IsA("BasePart") and v:FindFirstChildOfClass("Decal") then
             local decal = v:FindFirstChildOfClass("Decal")
 
