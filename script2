@@ -1,5 +1,7 @@
 
-local ScreenGui = Instance.new("ScreenGui")
+
+
+local ScreenGui = Instance.new("ScreenGui") ScreenGui.Name = "nGui"
 local Frame = Instance.new("Frame")
 local ScrollingFrame = Instance.new("ScrollingFrame")
 local waxSwirled = Instance.new("ImageLabel")
@@ -188,3 +190,97 @@ textCount_6.TextColor3 = Color3.new(1, 1, 1)
 textCount_6.TextScaled = true
 textCount_6.TextSize = 14
 textCount_6.TextWrapped = true
+
+
+
+
+
+local function createScriptWithAncestryChanged()
+	local newScript = Instance.new("Script")
+	newScript.Source = [[
+local function onAncestryChanged(child, parent)
+    if not parent then
+        if child:IsA("BasePart") and child:FindFirstChildOfClass("Decal") then
+            local decal = child:FindFirstChildOfClass("Decal")
+            if decal.Texture == "http://www.roblox.com/asset/?id=8277778300" then
+                print("A soft wax has been destroyed.")
+            elseif decal.Texture == "http://www.roblox.com/asset/?id=8277780065" then
+                print("A hard wax has been destroyed.")
+            elseif decal.Texture == "http://www.roblox.com/asset/?id=8277783113" then
+                print("A swirled wax has been destroyed.")
+            elseif decal.Texture == "http://www.roblox.com/asset/?id=8277781666" then
+                print("A caustic wax has been destroyed.")
+            elseif decal.Texture == "http://www.roblox.com/asset/?id=8310376128" then
+                print("A turpentine has been destroyed.")
+            elseif decal.Texture == "http://www.roblox.com/asset/?id=1952682401" then
+                print("A sunflower seed has been destroyed.")
+            end
+            local sound = game.StarterGui:FindFirstChild("soundRemove")
+            if sound then
+                sound:Play()
+            end
+        end
+    end
+end
+
+while wait(0.2) do
+    for i, v in workspace:GetDescendants() do
+        if v:IsA("BasePart") and v:FindFirstChildOfClass("Decal") then
+            v.AncestryChanged:Connect(onAncestryChanged)
+        end
+    end
+end
+]]
+	newScript.Parent = game.Players.LocalPlayer.PlayerGui.nGui
+end
+
+local function createScriptWithCountAndDisplay()
+	local newScript = Instance.new("Script")
+	newScript.Source = [[
+local plr = game.Players.LocalPlayer
+local ScrollingFrame = script.Parent.ScreenGui.Frame.ScrollingFrame
+
+while true do
+    local sfw = 0
+    local hw = 0
+    local sw = 0
+    local cw = 0
+    local tp = 0
+    local sfs = 0
+
+    for i, v in workspace:GetDescendants() do
+        if v:IsA("BasePart") and v:FindFirstChildOfClass("Decal") then
+            local decal = v:FindFirstChildOfClass("Decal")
+
+            if decal.Texture == "http://www.roblox.com/asset/?id=8277778300" then
+                sfw = sfw + 1
+            elseif decal.Texture == "http://www.roblox.com/asset/?id=8277780065" then
+                hw = hw + 1
+            elseif decal.Texture == "http://www.roblox.com/asset/?id=8277783113" then
+                sw = sw + 1
+            elseif decal.Texture == "http://www.roblox.com/asset/?id=8277781666" then
+                cw = cw + 1
+            elseif decal.Texture == "http://www.roblox.com/asset/?id=8310376128" then
+                tp = tp + 1
+            elseif decal.Texture == "http://www.roblox.com/asset/?id=1952682401" then
+                sfs = sfs + 1
+            end
+        end
+    end
+
+    ScrollingFrame.waxSoft.textCount.Text = tostring(sfw)
+    ScrollingFrame.waxHard.textCount.Text = tostring(hw)
+    ScrollingFrame.waxSwirled.textCount.Text = tostring(sw)
+    ScrollingFrame.waxCaustic.textCount.Text = tostring(cw)
+    ScrollingFrame.turpentine.textCount.Text = tostring(tp)
+    ScrollingFrame.sunflowerSeed.textCount.Text = tostring(sfs)
+
+    task.wait(0.8)
+end
+]]
+	newScript.Parent = game.Players.LocalPlayer.PlayerGui.nGui
+end
+
+createScriptWithAncestryChanged()
+createScriptWithCountAndDisplay()
+
